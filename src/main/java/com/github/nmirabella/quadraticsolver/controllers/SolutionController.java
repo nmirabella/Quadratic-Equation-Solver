@@ -1,5 +1,6 @@
 package com.github.nmirabella.quadraticsolver.controllers;
 
+import com.github.nmirabella.quadraticsolver.Exceptions.NotQuadraticException;
 import com.github.nmirabella.quadraticsolver.model.Solution;
 import com.github.nmirabella.quadraticsolver.service.SolutionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +25,8 @@ public class SolutionController {
                              @RequestParam(value = "b") double b,
                              @RequestParam(value = "c") double c) {
 
-        //TODO 400 error pages
+        if (a == 0)
+            throw new NotQuadraticException("The parameter 'a' cannot be zero");
 
         return solutionService.solve(a, b, c);
     }

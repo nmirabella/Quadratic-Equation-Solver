@@ -1,4 +1,4 @@
-package com.github.nmirabella.quadradicsolver.quadradicsolver;
+package com.github.nmirabella.quadraticsolver;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -7,7 +7,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class QuadradicsolverApplicationTests {
+public class QuadraticSolverApplicationTests {
 
 	@Test
 	public void contextLoads() {
