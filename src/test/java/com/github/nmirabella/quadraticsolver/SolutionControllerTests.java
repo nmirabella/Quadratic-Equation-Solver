@@ -25,10 +25,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class SolutionControllerTests {
 
     private static final int scale = 10;
+
     @MockBean
     private SolutionService solutionService;
+
     @Autowired
     private MockMvc mvc;
+
     @Value("${scale.min}")
     private int scaleMin;
 
@@ -72,6 +75,25 @@ public class SolutionControllerTests {
                 );
 
 
+    }
+
+    @Test
+    public void ExpectMissingOrInvalidParam() throws Exception {
+        String expectedResponse = "Missing or invalid parameter - a, b and c are required and must be valid numbers";
+
+        this.mvc.perform(get(
+                "/v1/solution?a=2&b&scale=" + (scaleMin - 1)).accept(MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(status().isBadRequest()).
+                andExpect(
+                        jsonPath("$.message").value(expectedResponse)
+                );
+
+        this.mvc.perform(get(
+                "/v1/solution?a=gh" + (scaleMin - 1)).accept(MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(status().isBadRequest()).
+                andExpect(
+                        jsonPath("$.message").value(expectedResponse)
+                );
     }
 
 
