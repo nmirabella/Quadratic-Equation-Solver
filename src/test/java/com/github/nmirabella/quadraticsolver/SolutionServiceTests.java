@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.math.BigDecimal;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -21,12 +23,13 @@ public class SolutionServiceTests {
     @Test
     //b² − 4ac > 0 - If the discriminant is a perfect square the roots are rational.
     public void TwoRealSolutions(){
-        double a = 1;
-        double b = -1;
-        double c = 2;
-        Solution expectedResult = new Solution(new String[]{"-1.0", "2.0"}, 0 );
+        BigDecimal a = BigDecimal.valueOf(1);
+        BigDecimal b = BigDecimal.valueOf(-1);
+        BigDecimal c = BigDecimal.valueOf(-2);
+        Solution expectedResult = new Solution(new String[]{BigDecimal.valueOf(2).toString(), BigDecimal.valueOf(-1).toString()}, BigDecimal.valueOf(9));
+        Solution calc = solutionService.solve(a, b, c);
 
-        assertEquals(solutionService.solve(a,b,c),expectedResult);
+        assertEquals(calc, expectedResult);
     }
 
 
@@ -36,24 +39,25 @@ public class SolutionServiceTests {
     @Test
     //b² − 4ac = 0 -  One Real Solution
     public void OneRealSolution(){
-        double a = 1;
-        double b = 2;
-        double c = 1;
-        Solution expectedResult = new Solution(new String[]{"-1.0"}, 0 );
+        BigDecimal a = BigDecimal.valueOf(1);
+        BigDecimal b = BigDecimal.valueOf(2);
+        BigDecimal c = BigDecimal.valueOf(1);
+        Solution expectedResult = new Solution(new String[]{BigDecimal.valueOf(-1).toString()}, BigDecimal.ZERO);
+        Solution calc = solutionService.solve(a, b, c);
 
-        assertEquals(solutionService.solve(a,b,c),expectedResult);
+        assertEquals(calc, expectedResult);
 
     }
     //b² − 4ac < 0 - No Real Solutions Two Imaginary Solutions
     @Test
     public void TwoImaginarySolutions(){
-        double a = 5;
-        double b = 2;
-        double c = 1;
+        BigDecimal a = BigDecimal.valueOf(5);
+        BigDecimal b = BigDecimal.valueOf(2);
+        BigDecimal c = BigDecimal.valueOf(1);
         Solution calc = solutionService.solve(a,b,c);
-        Solution expectedResult = new Solution(new String[]{"-0.2 + 0.4i", "-0.2 - 0.4i"}, -16 );
+        Solution expectedResult = new Solution(new String[]{"-0.2 + 0.4i", "-0.2 - 0.4i"}, BigDecimal.valueOf(-16));
 
-        assertTrue(calc.getDiscriminant() < 0);
+        assertTrue(calc.getDiscriminant().compareTo(BigDecimal.ZERO) < 0);
         assertEquals(calc,expectedResult);
 
     }

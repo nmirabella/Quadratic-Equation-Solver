@@ -1,13 +1,14 @@
 package com.github.nmirabella.quadraticsolver.model;
 
+import java.math.BigDecimal;
 import java.util.Arrays;
 
 public class Solution {
 
     private String roots[]; //must be string im order to support complex numbers
-    private double discriminant;
+    private BigDecimal discriminant;
 
-    public Solution(String[] roots, double discriminant) {
+    public Solution(String[] roots, BigDecimal discriminant) {
         this.roots = roots;
         this.discriminant = discriminant;
     }
@@ -20,11 +21,11 @@ public class Solution {
         this.roots = roots;
     }
 
-    public double getDiscriminant() {
+    public BigDecimal getDiscriminant() {
         return discriminant;
     }
 
-    public void setDiscriminant(double discriminant) {
+    public void setDiscriminant(BigDecimal discriminant) {
         this.discriminant = discriminant;
     }
 
@@ -43,7 +44,15 @@ public class Solution {
 
         Solution solution = (Solution) o;
 
-        return Double.compare(solution.discriminant, discriminant) == 0 && Arrays.equals(roots, solution.roots);
+        // Probably incorrect - comparing Object[] arrays with Arrays.equals
+        if (!Arrays.equals(roots, solution.roots)) return false;
+        return discriminant.equals(solution.discriminant);
     }
 
+    @Override
+    public int hashCode() {
+        int result = Arrays.hashCode(roots);
+        result = 31 * result + discriminant.hashCode();
+        return result;
+    }
 }

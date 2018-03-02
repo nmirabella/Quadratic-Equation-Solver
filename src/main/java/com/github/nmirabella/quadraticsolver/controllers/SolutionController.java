@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.math.BigDecimal;
+
 @RestController
 @RequestMapping("/v1")
 public class SolutionController {
@@ -21,11 +23,11 @@ public class SolutionController {
     }
 
     @RequestMapping("/solution")
-    public Solution solution(@RequestParam(value = "a") double a,
-                             @RequestParam(value = "b") double b,
-                             @RequestParam(value = "c") double c) {
+    public Solution solution(@RequestParam(value = "a") BigDecimal a,
+                             @RequestParam(value = "b") BigDecimal b,
+                             @RequestParam(value = "c") BigDecimal c) {
 
-        if (a == 0)
+        if (a.equals(BigDecimal.ZERO))
             throw new NotQuadraticException("The parameter 'a' cannot be zero");
 
         return solutionService.solve(a, b, c);

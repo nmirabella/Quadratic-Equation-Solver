@@ -3,52 +3,65 @@ package com.github.nmirabella.quadraticsolver.service;
 import com.github.nmirabella.quadraticsolver.model.Solution;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+
 
 @Service
 public class SolutionService {
 
-    //Algorithm: https://math.stackexchange.com/a/311590
-    public Solution solve(double a, double b, double c) {
-        double r1;
-        double r2;
-        double discriminant = b * b - 4 * a * c;
-        double aa = a + a;
 
-        if (discriminant < 0) { // support complex numbers by using regular quadratic equation
-            String complexr1, complexr2;
+    //https://stackoverflow.com/a/16859436
+    private static BigDecimal sqrt(BigDecimal value) {
+        if (value.equals(BigDecimal.ZERO))
+            return BigDecimal.ZERO;
+
+        BigDecimal x = new BigDecimal(Math.sqrt(value.doubleValue()));
+        return x.add(new BigDecimal(value.subtract(x.multiply(x)).doubleValue() / (x.doubleValue() * 2.0)));
+    }
+
+    public Solution solve(BigDecimal a, BigDecimal b, BigDecimal c) {
+
+        BigDecimal discriminant = (b.multiply(b)).subtract(a.multiply(c).multiply(new BigDecimal(4)));
+        BigDecimal aa = a.add(a);
+
+        int compareTo = discriminant.compareTo(BigDecimal.ZERO);
 
 
-            complexr1 = String.valueOf(-b / aa) + " + " + String.valueOf(Math.sqrt(Math.abs(discriminant)) / aa) + 'i';
-            complexr2 = complexr1.replaceFirst("\\s\\+\\s", " - ");
+        if (compareTo >= 0) {
+            BigDecimal squareRoot = sqrt(discriminant);
 
-            return new Solution(new String[]{complexr1, complexr2}, discriminant);
+            b = b.multiply(BigDecimal.valueOf(-1));
+
+
+            BigDecimal r1 = b.add(squareRoot).divide(aa, RoundingMode.HALF_UP);
+
+            if (compareTo == 0) // r1 == r2 in the case where discriminant is 0. Therefore only calculate r1.
+                return new Solution(new String[]{r1.toString()}, discriminant);
+
+
+            BigDecimal r2 = b.subtract(squareRoot).divide(aa, RoundingMode.HALF_UP);
+
+            //sort roots array
+            if (r1.compareTo(r2) > 0)
+                return new Solution(new String[]{r1.toString(), r2.toString()}, discriminant);
+            else
+                return new Solution(new String[]{r2.toString(), r1.toString()}, discriminant);
 
         }
 
-        if (b < 0) {
 
-            r1 = (-b + Math.sqrt(discriminant)) / aa;
-            r2 = c / (a * r1);
-        } else if (b > 0) {
-            r1 = (-b - Math.sqrt(discriminant)) / aa;
-            r2 = c / (a * r1);
+        // If we made it this far then discriminant < 0. Therefore the number is complex.
+        String complexr1, complexr2;
 
-        } else {
-            r1 = Math.sqrt(c / a);
-            r2 = -r1;
-        }
+        b = b.multiply(BigDecimal.valueOf(-1));
+        complexr1 = String.valueOf(b.divide(aa, RoundingMode.HALF_UP)) +
+                " + " +
+                String.valueOf(sqrt(discriminant.abs()).divide(aa, RoundingMode.HALF_UP)) + 'i';
 
-        if (discriminant == 0)
-            return new Solution(new String[]{String.valueOf(r1)}, discriminant);
+        complexr2 = complexr1.replaceFirst("\\s\\+\\s", " - ");
 
-        // sort the root array - it will make the results predictable
-        if (r1 < r2) {
-            double temp = r1;
-            r1 = r2;
-            r2 = temp;
-        }
-        return new Solution(new String[]{String.valueOf(r1), String.valueOf(r2)}, discriminant);
-
+        return new Solution(new String[]{complexr1, complexr2}, discriminant);
 
     }
 
