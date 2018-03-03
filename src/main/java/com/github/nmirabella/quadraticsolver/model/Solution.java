@@ -1,23 +1,39 @@
 package com.github.nmirabella.quadraticsolver.model;
 
+import io.swagger.annotations.ApiModelProperty;
+
 import java.math.BigDecimal;
 import java.util.Arrays;
 
 public class Solution {
 
-    private String roots[]; //must be string im order to support complex numbers
+    @ApiModelProperty(value = "value depends on rootsComplex", required = true, dataType = "BigDecimal")
+    private BigDecimal roots[];
+
+    @ApiModelProperty(required = true, dataType = "BigDecimal")
     private BigDecimal discriminant;
 
-    public Solution(String[] roots, BigDecimal discriminant) {
+    @ApiModelProperty(value = "If true, roots[] represents a ± bi where 'a' is roots[0] and 'b' is roots[1]." +
+            "Otherwise, they are regular roots", required = true)
+    private boolean isRootsComplex;
+
+    public Solution(BigDecimal[] roots, BigDecimal discriminant, boolean isRootsComplex) {
         this.roots = roots;
         this.discriminant = discriminant;
+        this.isRootsComplex = isRootsComplex;
     }
 
-    public String[] getRoots() {
+    public Solution(BigDecimal[] roots, BigDecimal discriminant) {
+        this.roots = roots;
+        this.discriminant = discriminant;
+        this.isRootsComplex = false;
+    }
+
+    public BigDecimal[] getRoots() {
         return roots;
     }
 
-    public void setRoots(String[] roots) {
+    public void setRoots(BigDecimal[] roots) {
         this.roots = roots;
     }
 
@@ -29,12 +45,12 @@ public class Solution {
         this.discriminant = discriminant;
     }
 
-    @Override
-    public String toString() {
-        return "Solution{" +
-                "roots=" + Arrays.toString(roots) +
-                ", discriminant=" + discriminant +
-                '}';
+    public boolean isRootsComplex() {
+        return isRootsComplex;
+    }
+
+    public void setRootsComplex(boolean rootsComplex) {
+        isRootsComplex = rootsComplex;
     }
 
     @Override
@@ -44,15 +60,16 @@ public class Solution {
 
         Solution solution = (Solution) o;
 
+        if (isRootsComplex != solution.isRootsComplex) return false;
         // Probably incorrect - comparing Object[] arrays with Arrays.equals
-        if (!Arrays.equals(roots, solution.roots)) return false;
-        return discriminant.equals(solution.discriminant);
+        return Arrays.equals(roots, solution.roots) && discriminant.equals(solution.discriminant);
     }
 
     @Override
     public int hashCode() {
         int result = Arrays.hashCode(roots);
         result = 31 * result + discriminant.hashCode();
+        result = 31 * result + (isRootsComplex ? 1 : 0);
         return result;
     }
 }

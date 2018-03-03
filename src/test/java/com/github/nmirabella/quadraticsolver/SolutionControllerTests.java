@@ -15,6 +15,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -41,7 +42,7 @@ public class SolutionControllerTests {
     private int scaleMax;
 
     private BigDecimal createNumber(String s) {
-        return new BigDecimal(s).setScale(scale, BigDecimal.ROUND_HALF_UP);
+        return new BigDecimal(s).setScale(scale, RoundingMode.HALF_UP);
     }
 
 
@@ -96,7 +97,7 @@ public class SolutionControllerTests {
     public void ExpectValidResponse() throws Exception {
         when(solutionService.solve(createNumber("2"), createNumber("4"), createNumber("1"), scale))
                 .thenReturn(
-                        new Solution(new String[]{"-0.2928932188", "-1.7071067812"}, createNumber("8"))
+                        new Solution(new BigDecimal[]{createNumber("-0.2928932188"), createNumber("-1.7071067812")}, createNumber("8"))
                 );
 
 

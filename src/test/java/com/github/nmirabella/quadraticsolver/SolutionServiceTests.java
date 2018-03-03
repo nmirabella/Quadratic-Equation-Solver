@@ -11,6 +11,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -26,7 +27,7 @@ public class SolutionServiceTests {
     private static final int scale = 10;
 
     private BigDecimal createNumber(String s) {
-        return new BigDecimal(s).setScale(scale, BigDecimal.ROUND_HALF_UP);
+        return new BigDecimal(s).setScale(scale, RoundingMode.HALF_UP);
     }
 
     @Test(expected = NotQuadraticException.class)
@@ -46,9 +47,9 @@ public class SolutionServiceTests {
         BigDecimal b = createNumber("5.55");
         BigDecimal c = createNumber("-3");
 
-        Solution expectedResult = new Solution(new String[]{
-                "0.4632177662",
-                "-3.2382177662"},
+        Solution expectedResult = new Solution(new BigDecimal[]{
+                createNumber("0.4632177662"),
+                createNumber("-3.2382177662")},
                 createNumber("54.8025"));
 
         Solution actual = solutionService.solve(a, b, c, scale);
@@ -64,9 +65,9 @@ public class SolutionServiceTests {
         BigDecimal b = createNumber("-1");
         BigDecimal c = createNumber("-2");
 
-        Solution expectedResult = new Solution(new String[]{
-                createNumber("2").toString(),
-                createNumber("-1").toString()},
+        Solution expectedResult = new Solution(new BigDecimal[]{
+                createNumber("2"),
+                createNumber("-1")},
                 createNumber("9"));
 
         Solution actual = solutionService.solve(a, b, c, scale);
@@ -83,8 +84,8 @@ public class SolutionServiceTests {
         BigDecimal b = createNumber("-2");
         BigDecimal c = createNumber("1");
 
-        Solution expectedResult = new Solution(new String[]{
-                createNumber("1").toString()},
+        Solution expectedResult = new Solution(new BigDecimal[]{
+                createNumber("1")},
                 createNumber("0"));
 
         Solution actual = solutionService.solve(a, b, c, scale);
@@ -100,9 +101,8 @@ public class SolutionServiceTests {
         BigDecimal c = createNumber("1");
 
         Solution actual = solutionService.solve(a, b, c, scale);
-        Solution expectedResult = new Solution(new String[]{
-                createNumber("-0.2").toString() + " + " + createNumber("0.4") + "i",
-                createNumber("-0.2").toString() + " - " + createNumber("0.4") + "i"}, createNumber("-16"));
+        Solution expectedResult = new Solution(new BigDecimal[]{
+                createNumber("-0.2"), createNumber("0.4")}, createNumber("-16"), true);
 
         assertTrue(actual.getDiscriminant().compareTo(BigDecimal.ZERO) < 0);
         assertEquals(expectedResult, actual);
