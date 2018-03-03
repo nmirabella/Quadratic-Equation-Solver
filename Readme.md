@@ -51,3 +51,19 @@ Expected Response:
 
 ```
 
+Query: `http://localhost:8080/v1/solution?a=5&b=2&c=1`
+
+
+Expected Response:
+
+```json
+
+{
+   "roots":[
+      "-0.2000000000 + 0.4000000000i",
+      "-0.2000000000 - 0.4000000000i"
+   ],
+   "discriminant":-16.0000000000
+}
+
+```
