@@ -9,8 +9,8 @@ The project uses Maven and can be compiled by running the following command from
      mvn clean compile
     
 Tests can be run using:
-  
-   mvn test
+
+    mvn test
    
 The application can be run locally using the Maven plugin:
 
