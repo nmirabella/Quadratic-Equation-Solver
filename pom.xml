@@ -3,13 +3,13 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>com.github.nmirabella.quadradicsolver</groupId>
-	<artifactId>quadradicsolver</artifactId>
+	<groupId>com.github.nmirabella.quadraticsolver</groupId>
+	<artifactId>quadraticsolver</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>Quadradic Solver</name>
-	<description>Demo project for Spring Boot</description>
+    <name>Quadratic Equation Solver</name>
+    <description>Quadratic Equation Solver</description>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -35,7 +35,17 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-	</dependencies>
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger2</artifactId>
+            <version>2.8.0</version>
+        </dependency>
+        <dependency>
+            <groupId>io.springfox.ui</groupId>
+            <artifactId>springfox-swagger-ui-rfc6570</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+    </dependencies>
 
 	<build>
 		<plugins>
