@@ -63,7 +63,7 @@ public class SolutionServiceTests {
         assertEquals(expectedResult, actual);
 
     }
-    //b² − 4ac = not perfect square -  Two Real irrational Solutions.
+
 
     @Test
     //b² − 4ac = 0 -  One Real Solution
