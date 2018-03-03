@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
@@ -44,9 +45,9 @@ public class SolutionController {
                     "The parameter 'scale' must be >= " + scaleMin + " and " + " <= " + scaleMax);
         }
 
-        a = a.setScale(scale, BigDecimal.ROUND_HALF_UP);
-        b = b.setScale(scale, BigDecimal.ROUND_HALF_UP);
-        c = c.setScale(scale, BigDecimal.ROUND_HALF_UP);
+        a = a.setScale(scale, RoundingMode.HALF_UP);
+        b = b.setScale(scale, RoundingMode.HALF_UP);
+        c = c.setScale(scale, RoundingMode.HALF_UP);
 
 
         return solutionService.solve(a, b, c, scale);

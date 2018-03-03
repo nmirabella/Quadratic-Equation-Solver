@@ -48,11 +48,12 @@ Expected Response:
 ```json
 
 {
-   "roots":[
-      "-0.2928932188",
-      "-1.7071067812"
-   ],
-   "discriminant":8.0000000000
+  "roots": [
+    -0.2928932188,
+    -1.7071067812
+  ],
+  "discriminant": 8,
+  "rootsComplex": false
 }
 
 ```
@@ -65,13 +66,17 @@ Expected Response:
 ```json
 
 {
-   "roots":[
-      "-0.2000000000 + 0.4000000000i",
-      "-0.2000000000 - 0.4000000000i"
-   ],
-   "discriminant":-16.0000000000
+  "roots": [
+    -0.2,
+    0.4
+  ],
+  "discriminant": -16,
+  "rootsComplex": true
 }
 
 ```
 
+If `rootsComplex` is `true` then roots[] represents `a ± bi` where 'a' is `roots[0]` and 'b' is `roots[1]`. So the above result translates to:
+
+    -0.2000000000 ± 0.4000000000i
 
