@@ -44,17 +44,6 @@ public class SolutionControllerTests {
         return new BigDecimal(s).setScale(scale, BigDecimal.ROUND_HALF_UP);
     }
 
-    @Test
-    public void ExpectAIsZeroBadRequest() throws Exception {
-
-        this.mvc.perform(get("/v1/solution?a=0&b=8&c=7").accept(MediaType.APPLICATION_JSON_VALUE))
-                .andExpect(status().isBadRequest()).
-                andExpect(
-                        jsonPath("$.message").value("The parameter 'a' cannot be zero")
-                );
-
-
-    }
 
     @Test
     public void ExpectInvalidScaleBadRequest() throws Exception {

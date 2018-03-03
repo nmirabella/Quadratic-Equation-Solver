@@ -1,5 +1,6 @@
 package com.github.nmirabella.quadraticsolver;
 
+import com.github.nmirabella.quadraticsolver.Exceptions.NotQuadraticException;
 import com.github.nmirabella.quadraticsolver.model.Solution;
 import com.github.nmirabella.quadraticsolver.service.SolutionService;
 import org.junit.Test;
@@ -27,6 +28,16 @@ public class SolutionServiceTests {
     private BigDecimal createNumber(String s) {
         return new BigDecimal(s).setScale(scale, BigDecimal.ROUND_HALF_UP);
     }
+
+    @Test(expected = NotQuadraticException.class)
+    public void ExpectNotQuadradicException() {
+        BigDecimal a = createNumber("0");
+        BigDecimal b = createNumber("5.55");
+        BigDecimal c = createNumber("-3");
+
+        Solution actual = solutionService.solve(a, b, c, scale);
+    }
+
 
     @Test
     //b² − 4ac > 0 - The roots are irrational.

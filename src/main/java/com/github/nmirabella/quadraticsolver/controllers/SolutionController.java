@@ -1,7 +1,6 @@
 package com.github.nmirabella.quadraticsolver.controllers;
 
 import com.github.nmirabella.quadraticsolver.Exceptions.InvalidScaleParameterException;
-import com.github.nmirabella.quadraticsolver.Exceptions.NotQuadraticException;
 import com.github.nmirabella.quadraticsolver.model.Solution;
 import com.github.nmirabella.quadraticsolver.service.SolutionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +35,7 @@ public class SolutionController {
                              @RequestParam(value = "c") BigDecimal c,
                              @RequestParam(value = "scale", defaultValue = "10", required = false) int scale) {
 
+
         if (!(scale >= scaleMin && scale <= scaleMax)) {
             throw new InvalidScaleParameterException(
                     "The parameter 'scale' must be >= " + scaleMin + " and " + " <= " + scaleMax);
@@ -44,9 +44,6 @@ public class SolutionController {
         a = a.setScale(scale, BigDecimal.ROUND_HALF_UP);
         b = b.setScale(scale, BigDecimal.ROUND_HALF_UP);
         c = c.setScale(scale, BigDecimal.ROUND_HALF_UP);
-
-        if (a.equals(BigDecimal.ZERO.setScale(scale, BigDecimal.ROUND_HALF_UP)))
-            throw new NotQuadraticException("The parameter 'a' cannot be zero");
 
 
         return solutionService.solve(a, b, c, scale);

@@ -24,6 +24,7 @@ public class GlobalExceptionHandler {
                 HttpStatus.BAD_REQUEST);
     }
 
+
     private class JsonResponse {
         String message;
 

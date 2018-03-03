@@ -1,5 +1,6 @@
 package com.github.nmirabella.quadraticsolver.service;
 
+import com.github.nmirabella.quadraticsolver.Exceptions.NotQuadraticException;
 import com.github.nmirabella.quadraticsolver.model.Solution;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +23,10 @@ public class SolutionService {
     }
 
     public Solution solve(BigDecimal a, BigDecimal b, BigDecimal c, int scale) {
+
+        if (a.equals(BigDecimal.ZERO.setScale(scale, BigDecimal.ROUND_HALF_UP)))
+            throw new NotQuadraticException("The parameter 'a' cannot be zero");
+
 
         BigDecimal discriminant = (b.multiply(b)).subtract(a.multiply(c).multiply(
                 new BigDecimal(4))).setScale(scale, BigDecimal.ROUND_HALF_UP);
