@@ -8,8 +8,8 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>Quadratic Solver</name>
-	<description>Demo project for Spring Boot</description>
+    <name>Quadratic Equation Solver</name>
+    <description>Quadratic Equation Solver</description>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
