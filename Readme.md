@@ -18,6 +18,12 @@ The application can be run locally using the Maven plugin:
     
 See the [Spring Boot documentation](https://docs.spring.io/spring-boot/docs/current/reference/html/using-boot-running-your-application.html) for more information. Note that Spring Boot will bind to `http://localhost:8080` by default.
 
+## Swagger Documentation
+
+The application generates its own Swagger documentation and is accessible at the following endpoint...
+
+    http://localhost:8080/swagger-ui.html
+
 ## Solving An Equation
 
 You must supply the `a`, `b` and `c` parameters of the equation 
@@ -67,3 +73,5 @@ Expected Response:
 }
 
 ```
+
+

@@ -6,10 +6,13 @@ import com.github.nmirabella.quadraticsolver.service.SolutionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.math.BigDecimal;
+
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RestController
 @RequestMapping("/v1")
@@ -29,7 +32,7 @@ public class SolutionController {
         this.solutionService = solutionService;
     }
 
-    @RequestMapping("/solution")
+    @RequestMapping(value = "/solution", method = RequestMethod.GET, produces = APPLICATION_JSON_VALUE)
     public Solution solution(@RequestParam(value = "a") BigDecimal a,
                              @RequestParam(value = "b") BigDecimal b,
                              @RequestParam(value = "c") BigDecimal c,
