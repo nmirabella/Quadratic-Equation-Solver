@@ -53,7 +53,6 @@ Expected Response:
     -1.7071067812
   ],
   "discriminant": 8,
-  "rootsComplex": false
 }
 
 ```
