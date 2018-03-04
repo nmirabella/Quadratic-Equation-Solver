@@ -7,33 +7,28 @@ import java.util.Arrays;
 
 public class Solution {
 
-    @ApiModelProperty(value = "value depends on rootsComplex", required = true, dataType = "BigDecimal")
-    private BigDecimal roots[];
+    @ApiModelProperty(value = "value is a pair of BigDecimals or a pair of Complex Numbers", required = true, dataType = "Number")
+    private Object roots[];
 
     @ApiModelProperty(required = true, dataType = "BigDecimal")
     private BigDecimal discriminant;
 
-    @ApiModelProperty(value = "If true, roots[] represents a ± bi where 'a' is roots[0] and 'b' is roots[1]." +
-            "Otherwise, they are regular roots", required = true)
-    private boolean isRootsComplex;
-
-    public Solution(BigDecimal[] roots, BigDecimal discriminant, boolean isRootsComplex) {
+    public Solution(ComplexNumber[] roots, BigDecimal discriminant) {
         this.roots = roots;
         this.discriminant = discriminant;
-        this.isRootsComplex = isRootsComplex;
+
     }
 
     public Solution(BigDecimal[] roots, BigDecimal discriminant) {
         this.roots = roots;
         this.discriminant = discriminant;
-        this.isRootsComplex = false;
     }
 
-    public BigDecimal[] getRoots() {
+    public Object[] getRoots() {
         return roots;
     }
 
-    public void setRoots(BigDecimal[] roots) {
+    public void setRoots(Object[] roots) {
         this.roots = roots;
     }
 
@@ -45,13 +40,6 @@ public class Solution {
         this.discriminant = discriminant;
     }
 
-    public boolean isRootsComplex() {
-        return isRootsComplex;
-    }
-
-    public void setRootsComplex(boolean rootsComplex) {
-        isRootsComplex = rootsComplex;
-    }
 
     @Override
     public boolean equals(Object o) {
@@ -60,16 +48,23 @@ public class Solution {
 
         Solution solution = (Solution) o;
 
-        if (isRootsComplex != solution.isRootsComplex) return false;
         // Probably incorrect - comparing Object[] arrays with Arrays.equals
-        return Arrays.equals(roots, solution.roots) && discriminant.equals(solution.discriminant);
+        if (!Arrays.equals(roots, solution.roots)) return false;
+        return discriminant != null ? discriminant.equals(solution.discriminant) : solution.discriminant == null;
     }
 
     @Override
     public int hashCode() {
         int result = Arrays.hashCode(roots);
-        result = 31 * result + discriminant.hashCode();
-        result = 31 * result + (isRootsComplex ? 1 : 0);
+        result = 31 * result + (discriminant != null ? discriminant.hashCode() : 0);
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Solution{" +
+                "roots=" + Arrays.toString(roots) +
+                ", discriminant=" + discriminant +
+                '}';
     }
 }

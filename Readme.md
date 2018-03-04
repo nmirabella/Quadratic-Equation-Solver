@@ -67,16 +67,23 @@ Expected Response:
 
 {
   "roots": [
-    -0.2,
-    0.4
+    {
+      "real": -0.2,
+      "sign": "+",
+      "imaginary": 0.4
+    },
+    {
+      "real": -0.2,
+      "sign": "-",
+      "imaginary": 0.4
+    }
   ],
-  "discriminant": -16,
-  "rootsComplex": true
+  "discriminant": -16
 }
 
 ```
 
-If `rootsComplex` is `true` then roots[] represents `a ± bi` where 'a' is `roots[0]` and 'b' is `roots[1]`. So the above result translates to:
+If the equation results in a [complex number](https://en.wikipedia.org/wiki/Complex_number) we receive the above result which translates to:
 
-    -0.2000000000 ± 0.4000000000i
+    -0.2 ± 0.4i
 

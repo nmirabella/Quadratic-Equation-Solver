@@ -1,6 +1,7 @@
 package com.github.nmirabella.quadraticsolver;
 
 import com.github.nmirabella.quadraticsolver.Exceptions.NotQuadraticException;
+import com.github.nmirabella.quadraticsolver.model.ComplexNumber;
 import com.github.nmirabella.quadraticsolver.model.Solution;
 import com.github.nmirabella.quadraticsolver.service.SolutionService;
 import org.junit.Test;
@@ -85,7 +86,7 @@ public class SolutionServiceTests {
         BigDecimal c = createNumber("1");
 
         Solution expectedResult = new Solution(new BigDecimal[]{
-                createNumber("1")},
+                createNumber("1"), createNumber("1")},
                 createNumber("0"));
 
         Solution actual = solutionService.solve(a, b, c, scale);
@@ -100,9 +101,11 @@ public class SolutionServiceTests {
         BigDecimal b = createNumber("2");
         BigDecimal c = createNumber("1");
 
+        ComplexNumber c1 = new ComplexNumber(createNumber("-0.2"), '+', createNumber("0.4"));
+        ComplexNumber c2 = new ComplexNumber(c1.getReal(), '-', c1.getImaginary());
+
         Solution actual = solutionService.solve(a, b, c, scale);
-        Solution expectedResult = new Solution(new BigDecimal[]{
-                createNumber("-0.2"), createNumber("0.4")}, createNumber("-16"), true);
+        Solution expectedResult = new Solution(new ComplexNumber[]{c1, c2}, createNumber("-16"));
 
         assertTrue(actual.getDiscriminant().compareTo(BigDecimal.ZERO) < 0);
         assertEquals(expectedResult, actual);

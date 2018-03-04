@@ -1,6 +1,7 @@
 package com.github.nmirabella.quadraticsolver.service;
 
 import com.github.nmirabella.quadraticsolver.Exceptions.NotQuadraticException;
+import com.github.nmirabella.quadraticsolver.model.ComplexNumber;
 import com.github.nmirabella.quadraticsolver.model.Solution;
 import org.springframework.stereotype.Service;
 
@@ -46,7 +47,7 @@ public class SolutionService {
                     setScale(scale, RoundingMode.HALF_UP);
 
             if (compareTo == 0) // r1 == r2 in the case where discriminant is 0. Therefore only calculate r1.
-                return new Solution(new BigDecimal[]{r1}, discriminant);
+                return new Solution(new BigDecimal[]{r1, r1}, discriminant);
 
 
             BigDecimal r2 = b.subtract(squareRoot).divide(aa, RoundingMode.HALF_UP).
@@ -71,7 +72,11 @@ public class SolutionService {
         complexr2 = sqrt(discriminant.abs(), scale).setScale(scale, RoundingMode.HALF_UP).
                 divide(aa, RoundingMode.HALF_UP);
 
-        return new Solution(new BigDecimal[]{complexr1, complexr2}, discriminant, true);
+
+        return new Solution(new ComplexNumber[]{
+                new ComplexNumber(complexr1, '+', complexr2),
+                new ComplexNumber(complexr1, '-', complexr2)
+        }, discriminant);
 
     }
 
