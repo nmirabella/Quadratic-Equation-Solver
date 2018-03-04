@@ -34,14 +34,14 @@ ax^2 + bx + c
 
 in your query. **Note** that `a` is not permitted to be 0 as that results in a linear equation.
 
-Optionally, you may also want to increase the scale. The application uses Java's [BigDecimal](https://docs.oracle.com/javase/8/docs/api/java/math/BigDecimal.html) and permits you to alter the `scale` parameter.
+Optionally, you may also want to increase the scale. The application uses Java's [BigDecimal](https://docs.oracle.com/javase/8/docs/api/java/math/BigDecimal.html) and allows you to alter the `scale` parameter.
 The application uses the standard quadratic equation and supports complex numbers. **Scale is set to 10 by default and must be between 10 and 20**.
 
 ### Example Queries
 
 These queries can be run from your web browser:
 
-    Query: `http://localhost:8080/v1/solution?a=2&b=4&c=1`
+Query: `http://localhost:8080/v1/solution?a=2&b=4&c=1`
 
 Expected Response:
 
