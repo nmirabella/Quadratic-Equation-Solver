@@ -51,11 +51,11 @@ Expected Response:
   "roots": [
     {
       "real": -0.2928932188,
-      "imaginary": null
+      "imaginary": 0
     },
     {
       "real": -1.7071067812,
-      "imaginary": null
+      "imaginary": 0
     }
   ],
   "discriminant": 8
