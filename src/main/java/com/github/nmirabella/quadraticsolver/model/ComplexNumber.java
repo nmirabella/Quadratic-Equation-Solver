@@ -17,7 +17,7 @@ public class ComplexNumber {
 
     public ComplexNumber(BigDecimal real) {
         this.real = real;
-        this.imaginary = null;
+        this.imaginary = BigDecimal.ZERO;
     }
 
     public BigDecimal getReal() {
