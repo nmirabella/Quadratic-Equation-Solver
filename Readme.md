@@ -41,7 +41,7 @@ The application uses the standard quadratic equation and supports complex number
 
 These queries can be run from your web browser:
 
-Query: `http://localhost:8080/v1/solution?a=2&b=4&c=1`
+    Query: `http://localhost:8080/v1/solution?a=2&b=4&c=1`
 
 Expected Response:
 
@@ -49,10 +49,17 @@ Expected Response:
 
 {
   "roots": [
-    -0.2928932188,
-    -1.7071067812
+    {
+      "real": -0.2928932188,
+      "imaginary": null
+    },
+    {
+      "real": -1.7071067812,
+      "imaginary": null
+    }
   ],
-  "discriminant": 8,
+  "discriminant": 8
+
 }
 
 ```
@@ -68,13 +75,11 @@ Expected Response:
   "roots": [
     {
       "real": -0.2,
-      "sign": "+",
       "imaginary": 0.4
     },
     {
       "real": -0.2,
-      "sign": "-",
-      "imaginary": 0.4
+      "imaginary": -0.4
     }
   ],
   "discriminant": -16
@@ -85,4 +90,3 @@ Expected Response:
 If the equation results in a [complex number](https://en.wikipedia.org/wiki/Complex_number) we receive the above result which translates to:
 
     -0.2 ± 0.4i
-
