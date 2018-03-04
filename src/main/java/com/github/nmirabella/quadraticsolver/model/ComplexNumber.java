@@ -1,12 +1,9 @@
 package com.github.nmirabella.quadraticsolver.model;
 
-import io.swagger.annotations.ApiModelProperty;
-
 import java.math.BigDecimal;
 
 //https://en.wikipedia.org/wiki/Complex_number
 public class ComplexNumber {
-    @ApiModelProperty(value = "real part of the complex num", required = true, dataType = "object")
     private BigDecimal real;
     private BigDecimal imaginary;
 
