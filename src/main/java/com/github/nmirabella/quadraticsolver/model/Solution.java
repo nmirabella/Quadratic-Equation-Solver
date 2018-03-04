@@ -7,8 +7,8 @@ import java.util.Arrays;
 
 public class Solution {
 
-    @ApiModelProperty(value = "value is a pair of BigDecimals or a pair of Complex Numbers", required = true, dataType = "Number")
-    private Object roots[];
+    @ApiModelProperty(value = "value is a pair of ComplexNumber objects", required = true, dataType = "object")
+    private ComplexNumber roots[];
 
     @ApiModelProperty(required = true, dataType = "BigDecimal")
     private BigDecimal discriminant;
@@ -20,15 +20,20 @@ public class Solution {
     }
 
     public Solution(BigDecimal[] roots, BigDecimal discriminant) {
-        this.roots = roots;
+        this.roots = new ComplexNumber[roots.length];
+
+        for (int i = 0; i < roots.length; i++) {
+            this.roots[i] = new ComplexNumber(roots[i]);
+        }
+
         this.discriminant = discriminant;
     }
 
-    public Object[] getRoots() {
+    public ComplexNumber[] getRoots() {
         return roots;
     }
 
-    public void setRoots(Object[] roots) {
+    public void setRoots(ComplexNumber[] roots) {
         this.roots = roots;
     }
 
@@ -49,8 +54,8 @@ public class Solution {
         Solution solution = (Solution) o;
 
         // Probably incorrect - comparing Object[] arrays with Arrays.equals
-        if (!Arrays.equals(roots, solution.roots)) return false;
-        return discriminant != null ? discriminant.equals(solution.discriminant) : solution.discriminant == null;
+        return Arrays.equals(roots, solution.roots) && (discriminant != null ?
+                discriminant.equals(solution.discriminant) : solution.discriminant == null);
     }
 
     @Override
@@ -58,13 +63,5 @@ public class Solution {
         int result = Arrays.hashCode(roots);
         result = 31 * result + (discriminant != null ? discriminant.hashCode() : 0);
         return result;
-    }
-
-    @Override
-    public String toString() {
-        return "Solution{" +
-                "roots=" + Arrays.toString(roots) +
-                ", discriminant=" + discriminant +
-                '}';
     }
 }

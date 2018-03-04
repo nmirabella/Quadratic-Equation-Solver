@@ -1,17 +1,23 @@
 package com.github.nmirabella.quadraticsolver.model;
 
+import io.swagger.annotations.ApiModelProperty;
+
 import java.math.BigDecimal;
 
 //https://en.wikipedia.org/wiki/Complex_number
 public class ComplexNumber {
+    @ApiModelProperty(value = "real part of the complex num", required = true, dataType = "object")
     private BigDecimal real;
-    private char sign;
     private BigDecimal imaginary;
 
-    public ComplexNumber(BigDecimal real, char sign, BigDecimal imaginary) {
+    public ComplexNumber(BigDecimal real, BigDecimal imaginary) {
         this.real = real;
-        this.sign = sign;
         this.imaginary = imaginary;
+    }
+
+    public ComplexNumber(BigDecimal real) {
+        this.real = real;
+        this.imaginary = null;
     }
 
     public BigDecimal getReal() {
@@ -20,14 +26,6 @@ public class ComplexNumber {
 
     public void setReal(BigDecimal real) {
         this.real = real;
-    }
-
-    public char getSign() {
-        return sign;
-    }
-
-    public void setSign(char sign) {
-        this.sign = sign;
     }
 
     public BigDecimal getImaginary() {
@@ -45,24 +43,21 @@ public class ComplexNumber {
 
         ComplexNumber that = (ComplexNumber) o;
 
-        return sign == that.sign && (real != null ? real.equals(that.real) : that.real == null)
-                && (imaginary != null ? imaginary.equals(that.imaginary) : that.imaginary == null);
+        return (real != null ? real.equals(that.real) : that.real == null) &&
+                (imaginary != null ? imaginary.equals(that.imaginary) : that.imaginary == null);
     }
 
     @Override
     public int hashCode() {
         int result = real != null ? real.hashCode() : 0;
-        result = 31 * result + (int) sign;
         result = 31 * result + (imaginary != null ? imaginary.hashCode() : 0);
         return result;
     }
-
 
     @Override
     public String toString() {
         return "ComplexNumber{" +
                 "real=" + real +
-                ", sign=" + sign +
                 ", imaginary=" + imaginary +
                 '}';
     }

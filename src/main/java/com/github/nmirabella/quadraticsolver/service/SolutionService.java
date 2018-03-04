@@ -74,8 +74,8 @@ public class SolutionService {
 
 
         return new Solution(new ComplexNumber[]{
-                new ComplexNumber(complexr1, '+', complexr2),
-                new ComplexNumber(complexr1, '-', complexr2)
+                new ComplexNumber(complexr1, complexr2),
+                new ComplexNumber(complexr1, complexr2.multiply(BigDecimal.valueOf(-1)))
         }, discriminant);
 
     }

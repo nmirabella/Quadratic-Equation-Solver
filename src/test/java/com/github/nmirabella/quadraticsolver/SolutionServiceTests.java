@@ -101,8 +101,8 @@ public class SolutionServiceTests {
         BigDecimal b = createNumber("2");
         BigDecimal c = createNumber("1");
 
-        ComplexNumber c1 = new ComplexNumber(createNumber("-0.2"), '+', createNumber("0.4"));
-        ComplexNumber c2 = new ComplexNumber(c1.getReal(), '-', c1.getImaginary());
+        ComplexNumber c1 = new ComplexNumber(createNumber("-0.2"), createNumber("0.4"));
+        ComplexNumber c2 = new ComplexNumber(c1.getReal(), c1.getImaginary().multiply(BigDecimal.valueOf(-1)));
 
         Solution actual = solutionService.solve(a, b, c, scale);
         Solution expectedResult = new Solution(new ComplexNumber[]{c1, c2}, createNumber("-16"));
